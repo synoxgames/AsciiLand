@@ -5,16 +5,25 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 
+import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
+
 import Base.Vector2;
 import Crafting.Item;
 import Mine.MinableItem;
+import Mine.MinableItem.StrengthRequired;
 
 public class MapManager {
 
     public static int viewSize = 15;
     public static Character[][] mainMap = new Character[124][124];
     public static final HashMap<Character, MinableItem> itemMap = new HashMap<Character, MinableItem>() {
-         {put('t', new MinableItem(new Item("Wood"), 5f)); }
+         { put('t', new MinableItem(new Item("Wood"), 5f, StrengthRequired.None)); }
+    };
+    public static final HashMap<Character, String> mapItemType = new HashMap<Character, String>() {
+        { put('t', "Tree"); }
+        { put('.', "Grass"); }
+        { put('~', "Water"); }
+        { put('#', "Concrete"); }
     };
 
     public static void LoadMap() throws Exception {
@@ -77,8 +86,8 @@ public class MapManager {
   //  public static void 
 
     public static boolean CheckAccessibility(Vector2 checkPosition) {
-        boolean xCheck = checkPosition.x >= 0 && checkPosition.x < mainMap.length;
-        boolean yCheck = checkPosition.y >= 0 && checkPosition.y < mainMap.length;
+        boolean xCheck = checkPosition.x >= 0 && checkPosition.x < mainMap.length-1;
+        boolean yCheck = checkPosition.y >= 0 && checkPosition.y < mainMap.length-1;
         boolean typeCheck = mainMap[checkPosition.x][checkPosition.y] == 46;
 
         return xCheck && yCheck && typeCheck;
@@ -90,6 +99,22 @@ public class MapManager {
 
     public static void ReplaceChar(Vector2 position, Character tile) {
         mainMap[position.x][position.y] = tile;
+    }
+
+    public static void FindClosestTree() {
+        System.out.println("nah");
+    }
+
+    public static String CheckTileType(char toCheck) {
+        if (!mapItemType.containsKey(toCheck)) return "Item Not Found! Please Add "+toCheck;
+
+        String tileName = mapItemType.get(toCheck);
+
+        if (itemMap.containsKey(toCheck)) {
+            tileName += "\n====================\nMinable\nResource: \t"+itemMap.get(toCheck).outputItem.itemName+"\nDurability: \t"+itemMap.get(toCheck).durability.toString();
+        }
+
+        return tileName;
     }
 
 }

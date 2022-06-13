@@ -48,7 +48,6 @@ public class Player {
              * 115  - s
              * 100  - d
              */
-
             switch (charInt) {
                 case 119:
                     MovePlayer(Vector2.up);
@@ -79,7 +78,7 @@ public class Player {
                 System.out.println("Something Blocked Your Path");
             }
         } catch (Exception e) {
-            System.out.println("cock");
+            System.out.println(e);
         }
     }
 

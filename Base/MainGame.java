@@ -33,12 +33,14 @@ public class MainGame {
         mainAction.put(2, "Move Player");
         mainAction.put(3, "Mine Resource");
         mainAction.put(4, "View Inventory");
+        mainAction.put(5, "Check Surrounding");
     }
 
     public static void GameLoop() {
         System.out.println("What Would You Like To Do?");
         System.out.println("===========================\n");
         PickOption(mainAction);
+        System.out.println("============================\n\n\n\n\n\n");
     }
 
     public static void PickOption(HashMap<Integer, String> hashMap) {
@@ -58,6 +60,9 @@ public class MainGame {
             case 4:
                 System.out.println(StringManager.InventroyToList(player.invItemCount));
                 return;
+            case 5:
+                CheckSurroundings();
+                break;
             default:
                 System.out.println("Sorry! This hasn't been found!");
                 return;
@@ -104,13 +109,13 @@ public class MainGame {
                     moveDirection.AddVector(Vector2.up);
                     break;
                 case 97:
-                    moveDirection.AddVector(Vector2.right);
+                    moveDirection.AddVector(Vector2.left);
                     break;
                 case 115:
                     moveDirection.AddVector(Vector2.down);
                     break;
                 case 100:
-                    moveDirection.AddVector(Vector2.left);
+                    moveDirection.AddVector(Vector2.right);
                     break;
                 default:
                     System.out.println("Error Moving!");
@@ -137,6 +142,12 @@ public class MainGame {
         } else {
             System.out.println("No Minable Item Found");
         }
+    }
+
+    public static void CheckSurroundings() {
+        Vector2 charPos = CheckDirection("Enter Tile Check Direction | [W,A,S,D] | Max: 1\n\n>> ");
+        char tileGot = MapManager.GetCharFromMap(charPos);
+        System.out.println(MapManager.CheckTileType(tileGot));
     }
     
 }
