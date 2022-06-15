@@ -82,4 +82,38 @@ public class Player {
         }
     }
 
+    public Item UseItem(Item toGet) {
+        if (!inventory.contains(toGet))  { System.out.println("Item Not Found!"); return null; }
+
+        Item iGot = GetItemFromInventory(0, toGet.itemName);
+        return iGot;
+    }
+
+    public Item GetItemFromInventory(int i, String itemName) {
+        if (inventory.get(i).itemName == itemName) {
+            Item iGot = inventory.get(i);
+            inventory.remove(i);
+            return iGot;
+        }
+        return GetItemFromInventory(i + 1, itemName);
+    }
+
+    public void CraftItem() {
+        boolean inCrafting = true;
+        CraftingTable ct = new CraftingTable();
+        ArrayList<Item> craftingItems = new ArrayList<Item>();
+
+        while (inCrafting) {
+            if (inventory.size() <= 0) {
+                System.out.println("Inventory Empty");
+                inCrafting = false;
+                return;
+            }
+
+            System.out.println(StringManager.InventroyToList(invItemCount));
+            int getItem = StringManager.GetInt("\nSelect Item >> ");
+            System.out.println(getItem);
+        }
+    }
+
 }

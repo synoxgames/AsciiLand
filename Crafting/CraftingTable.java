@@ -9,7 +9,7 @@ public class CraftingTable {
 
     // public Item Craft(Item firstItem, Item secondItem) { }
 
-    public CraftingTable() throws Exception { SetupCraftingTable(); }
+    public CraftingTable() { SetupCraftingTable(); }
 
     public HashMap<String, Item> craftableItems = new HashMap<String, Item>();
 
@@ -31,7 +31,8 @@ public class CraftingTable {
      * 
      * @throws Exception
      */
-    public void SetupCraftingTable() throws Exception {
+    public void SetupCraftingTable() {
+        try {
         File craftFile = new File(System.getProperty("user.dir") + "\\Crafting\\Recipes\\CraftableItems.txt");
         BufferedReader br = new BufferedReader(new FileReader(craftFile));
         String line = br.readLine();
@@ -49,16 +50,16 @@ public class CraftingTable {
                 item += materials[i];
             }
 
-            for (int i = materials.length; i > 0; i--) {
-                reversedItem += materials[i];
-            }
-
             craftableItems.put(item, output);
             if (!reversedItem.equals(item)) craftableItems.put(reversedItem, output);
 
             line = br.readLine();
+            br.close();
+        }
+        } catch (Exception e) {
+            System.out.println("Failed To Load Crafting Table: \nReason - \n"+e);
         }
 
-        br.close();
+        
     }
 }

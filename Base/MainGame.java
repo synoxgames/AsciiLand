@@ -34,13 +34,14 @@ public class MainGame {
         mainAction.put(3, "Mine Resource");
         mainAction.put(4, "View Inventory");
         mainAction.put(5, "Check Surrounding");
+        mainAction.put(6, "Craft Item");
     }
 
     public static void GameLoop() {
         System.out.println("What Would You Like To Do?");
         System.out.println("===========================\n");
         PickOption(mainAction);
-        System.out.println("============================\n\n\n\n\n\n");
+        System.out.println("\n============================\n\n");
     }
 
     public static void PickOption(HashMap<Integer, String> hashMap) {
@@ -62,6 +63,9 @@ public class MainGame {
                 return;
             case 5:
                 CheckSurroundings();
+                break;
+            case 6:
+                player.CraftItem();
                 break;
             default:
                 System.out.println("Sorry! This hasn't been found!");
