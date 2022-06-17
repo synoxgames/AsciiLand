@@ -59,7 +59,7 @@ public class MainGame {
                 MineResource();
                 return;
             case 4:
-                System.out.println(StringManager.InventroyToList(player.invItemCount));
+                System.out.println(StringManager.InventroyToList(player.inventory));
                 return;
             case 5:
                 CheckSurroundings();
@@ -140,7 +140,7 @@ public class MainGame {
         if (MapManager.itemMap.containsKey(tileGot)) {
             MinableItem minable = MapManager.itemMap.get(tileGot);
             Item outputItem = minable.Mine();
-            player.AddItem(outputItem);
+            player.AddItem(outputItem.itemName);
             System.out.println(outputItem);
             MapManager.ReplaceChar(charPos, '.');
         } else {

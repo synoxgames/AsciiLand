@@ -1,1 +1,2 @@
 Wood+Wood=Stick
+Stick+Stick=Handle

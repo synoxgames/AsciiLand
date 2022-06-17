@@ -1,5 +1,4 @@
 package Base;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,8 +7,7 @@ import Map.MapManager;
 
 public class Player {
 
-    public ArrayList<Item> inventory = new ArrayList<Item>();
-    public HashMap<String, Integer> invItemCount = new HashMap<String, Integer>();
+    public HashMap<String, Item> inventory = new HashMap<String, Item>();
     public Vector2 playerLocation;
 
     public Player() {
@@ -25,14 +23,15 @@ public class Player {
      * 
      * @param toAdd
      */
-    public void AddItem(Item toAdd) {
-        if (invItemCount.containsKey(toAdd.itemName)) {
-            invItemCount.put(toAdd.itemName, invItemCount.get(toAdd.itemName) + 1);
+    public void AddItem(String toAdd) {
+        if (inventory.containsKey(toAdd)) {
+            Item item = inventory.get(toAdd);
+            item.count++;
+            inventory.put(toAdd, item);
             return;
         }
 
-        inventory.add(toAdd);
-        invItemCount.put(toAdd.itemName, 1);
+        inventory.put(toAdd, new Item(toAdd));
     }
 
     public void MovePlayer(String movements) {
@@ -82,20 +81,8 @@ public class Player {
         }
     }
 
-    public Item UseItem(Item toGet) {
-        if (!inventory.contains(toGet))  { System.out.println("Item Not Found!"); return null; }
-
-        Item iGot = GetItemFromInventory(0, toGet.itemName);
-        return iGot;
-    }
-
-    public Item GetItemFromInventory(int i, String itemName) {
-        if (inventory.get(i).itemName == itemName) {
-            Item iGot = inventory.get(i);
-            inventory.remove(i);
-            return iGot;
-        }
-        return GetItemFromInventory(i + 1, itemName);
+    public Item GetItem(String toGet) {
+        return inventory.get(toGet);
     }
 
     public void CraftItem() {
@@ -110,9 +97,15 @@ public class Player {
                 return;
             }
 
-            System.out.println(StringManager.InventroyToList(invItemCount));
+            System.out.println(StringManager.InventroyToList(inventory));
             int getItem = StringManager.GetInt("\nSelect Item >> ");
-            System.out.println(getItem);
+
+            if (getItem > inventory.size() || getItem <= 0) {
+                System.out.println("You Cannot Pick Items That Don't Exist");
+            }
+            
+            Item gottenItem = (Item)inventory.keySet().toArray()[getItem-1];
+            craftingItems.add(gottenItem);
         }
     }
 

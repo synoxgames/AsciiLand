@@ -8,14 +8,14 @@ import Crafting.Item;
 
 public class StringManager {
     
-    public static String InventroyToList(HashMap<String, Integer> invHM) {
+    public static String InventroyToList(HashMap<String, Item> invHM) {
         if (invHM.isEmpty()) return "Invetory Empty";
 
         String toReturn = "";
 
         for (int i = 0; i < invHM.size(); i++) {
             String key = invHM.keySet().toArray()[i].toString();
-            toReturn += ((i+1) + ". "+key + " - x"+invHM.get(key));
+            toReturn += ((i+1) + ". "+key + " - x"+invHM.get(key).count);
         }
 
         return toReturn;
